@@ -13,7 +13,15 @@ def get_pion_position(board,player, color):
     if player == 0:
         player = "light"
     else : player = "dark"
-    pos = board[[1],[color, player]]
+    for r in range(len(board)):
+        for c in range(len(board[r])):
+            tile = board[r][c]
+            pion = tile[1]
+            if pion is not None :
+                if pion[0] == color and pion[1] == player :
+                    return(r, c)             
+    return None
+            
     
 def get_legal_moves(board, player, color):
     pass
