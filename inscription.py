@@ -53,7 +53,8 @@ def handle_server_requests():
                     send_json(conn, {"response": "pong"})
 
                 elif request.get("request") == "play":
-                    print(f"[!] Match en cours. État : {request.get('state')}")
+                    state = request.get("state")
+                    print(f"[!] Match en cours. État : {state}")
                     response = {
                         "response": "move",
                         "move": 0,
