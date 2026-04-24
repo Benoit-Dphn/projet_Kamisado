@@ -1,29 +1,4 @@
-def get_moves(board, r, c, camp):
-
-    moves = []
-    direction = 1 if camp == "light" else -1
-
-    vectors = [
-        (direction, 0),
-        (direction, -1),
-        (direction, +1),
-    ]
-
-    for dr, dc in vectors:
-        for i in range(1, 8):
-            new_r = r + dr * i
-            new_c = c + dc * i
-
-            if not (0 <= new_r <= 7 and 0 <= new_c <= 7):
-                break
-
-            if board[new_r][new_c][1] is not None:
-                break
-
-            dest_color = board[new_r][new_c][0]
-            moves.append((new_r, new_c, dest_color))
-
-    return moves
+from utile import get_moves, gameOver
 
 
 def evaluation_kamisado(etat, mon_index):
