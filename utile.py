@@ -46,5 +46,21 @@ def get_pos(board, player, color):
     indx = "dark" if player == 0 else "light"
     for l in range(8):
         for c in range(8):
-            if (board[l][c][1][0] == color) and (board[l][c][1]) == indx:
-                return l, c
+            if board[l][c][1] is not None:
+                if (board[l][c][1][0] == color) and (board[l][c][1][1]) == indx:
+                    return l, c
+
+    return None
+
+
+def get_legal_moves(board, player, starting_l, color):
+    legal_moves = []
+    colision = [
+        0,
+        0,
+        0,
+    ]  # [diag_gauche,vertical,diag droite]  0 is on a pas croiser un pion 1 si oui
+    dl_gauche = 0
+    dl_droite = 0
+
+    # je vais juste avnacer pour faire le verticale avec la boucle mais a chaque fois je frais de check avec dl_gauche et droite comme ca on parcour tous les chemin vrtica aussi , le seul probleme c est , la boucle sera while on a pas dep
