@@ -1,5 +1,3 @@
-from inscription import handle_server_requests as hsr
-from AI import negamaxWithPruning
 import copy
 
 
@@ -30,11 +28,11 @@ def gameOver(state):
 def get_pos(board, player, color):
 
     indx = "dark" if player == 0 else "light"
-    for l in range(8):
+    for row in range(8):
         for c in range(8):
-            if board[l][c][1] is not None:
-                if (board[l][c][1][0] == color) and (board[l][c][1][1]) == indx:
-                    return l, c
+            if board[row][c][1] is not None:
+                if (board[row][c][1][0] == color) and (board[row][c][1][1]) == indx:
+                    return row, c
 
     return None
 
@@ -89,3 +87,15 @@ def get_legal_moves(board, player, starting_l, starting_c, color):
             break
 
     return legal_moves
+
+
+def apply(state, move):
+    start_l, start_c, end_l, end_c, player, color = move
+    board = copy_board(state)
+    pion = board[start_l][start_c][1]
+    board[start_l][start_c][1] = None
+    board[end_l][end_c][1] = pion
+    new_state = copy.deepcopy(state)
+    new_state["board"] = board
+    new_state["current"] = 1 - player
+    return new_state
