@@ -1,35 +1,11 @@
-def parse_board(state):
-    # pas vraiment necessaire .
-    pass
+from inscription import handle_server_requests as hsr
+from AI import negamaxWithPruning
+import copy
 
 
-def get_moves(
-    board, r, c, camp
-):  # on va la refaire d un maniere un peu plus intelligente .
-    moves = []
-    direction = 1 if camp == "light" else -1
-
-    vectors = [
-        (direction, 0),
-        (direction, -1),
-        (direction, +1),
-    ]
-
-    for dr, dc in vectors:
-        for i in range(1, 8):
-            new_r = r + dr * i
-            new_c = c + dc * i
-
-            if not (0 <= new_r <= 7 and 0 <= new_c <= 7):
-                break
-
-            if board[new_r][new_c][1] is not None:
-                break
-
-            dest_color = board[new_r][new_c][0]
-            moves.append((new_r, new_c, dest_color))
-
-    return moves
+def copy_board(state):
+    copied_board = copy.deepcopy(state["board"])
+    return copied_board
 
 
 def send_moves(state, move):
@@ -54,11 +30,11 @@ def gameOver(state):
 def get_pos(board, player, color):
 
     indx = "dark" if player == 0 else "light"
-    for row in range(8):
+    for l in range(8):
         for c in range(8):
-            if board[row][c][1] is not None:
-                if (board[row][c][1][0] == color) and (board[row][c][1][1]) == indx:
-                    return row, c
+            if board[l][c][1] is not None:
+                if (board[l][c][1][0] == color) and (board[l][c][1][1]) == indx:
+                    return l, c
 
     return None
 
