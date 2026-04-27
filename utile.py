@@ -3,10 +3,13 @@ from AI import negamaxWithPruning
 
 
 def parse_board(state):
+    # pas vraiment necessaire .
     pass
 
 
-def get_moves(board, r, c, camp):
+def get_moves(
+    board, r, c, camp
+):  # on va la refaire d un maniere un peu plus intelligente .
     moves = []
     direction = 1 if camp == "light" else -1
 
@@ -53,14 +56,54 @@ def get_pos(board, player, color):
     return None
 
 
-def get_legal_moves(board, player, starting_l, color):
+def get_legal_moves(board, player, starting_l, starting_c, color):
     legal_moves = []
-    colision = [
-        0,
-        0,
-        0,
-    ]  # [diag_gauche,vertical,diag droite]  0 is on a pas croiser un pion 1 si oui
-    dl_gauche = 0
-    dl_droite = 0
 
-    # je vais juste avnacer pour faire le verticale avec la boucle mais a chaque fois je frais de check avec dl_gauche et droite comme ca on parcour tous les chemin vrtica aussi , le seul probleme c est , la boucle sera while on a pas dep
+    # player 0 avance vers le bas, player 1 vers le haut.
+    direction = 1 if player == 0 else -1
+    current_camp = "light" if player == 0 else "dark"
+
+    # False => on continue d'explorer la direction, True => direction bloquee.
+    blocked = {
+        "diag_left": False,
+        "vertical": False,
+        "diag_right": False,
+    }
+
+    for step in range(1, 8):
+        next_l = starting_l + direction * step
+
+        if next_l < 0 or next_l > 7:
+            break
+
+        directions = [
+            ("diag_left", starting_c - step),
+            ("vertical", starting_c),
+            ("diag_right", starting_c + step),
+        ]
+
+        for name, next_c in directions:
+            if blocked[name]:
+                continue
+
+            if next_c < 0 or next_c > 7:
+                blocked[name] = True
+                continue
+
+            square = board[next_l][next_c]
+            piece = square[1]
+
+            if piece is None:
+                legal_moves.append((next_l, next_c, square[0]))
+                continue
+
+            # Collision: si pion adverse, on ajoute la case puis on bloque la direction.
+            if piece[1] != current_camp:
+                legal_moves.append((next_l, next_c, square[0]))
+
+            blocked[name] = True
+
+        if blocked["diag_left"] and blocked["vertical"] and blocked["diag_right"]:
+            break
+
+    return legal_moves
