@@ -1,7 +1,3 @@
-from inscription import handle_server_requests as hsr
-from AI import negamaxWithPruning
-
-
 def parse_board(state):
     # pas vraiment necessaire .
     pass
@@ -40,18 +36,29 @@ def send_moves(state, move):
     pass
 
 
-def gameOver(state, player):
-    pass
+def gameOver(state):
+    board = state["board"]
+
+    for i in range(8):
+        top_piece = board[0][i][1]
+        if top_piece is not None and top_piece[1] == "dark":
+            return True
+
+        bottom_piece = board[7][i][1]
+        if bottom_piece is not None and bottom_piece[1] == "light":
+            return True
+
+    return False
 
 
 def get_pos(board, player, color):
 
     indx = "dark" if player == 0 else "light"
-    for l in range(8):
+    for row in range(8):
         for c in range(8):
-            if board[l][c][1] is not None:
-                if (board[l][c][1][0] == color) and (board[l][c][1][1]) == indx:
-                    return l, c
+            if board[row][c][1] is not None:
+                if (board[row][c][1][0] == color) and (board[row][c][1][1]) == indx:
+                    return row, c
 
     return None
 
@@ -59,7 +66,6 @@ def get_pos(board, player, color):
 def get_legal_moves(board, player, starting_l, starting_c, color):
     legal_moves = []
 
-    # player 0 avance vers le bas, player 1 vers le haut.
     direction = 1 if player == 0 else -1
     current_camp = "light" if player == 0 else "dark"
 
