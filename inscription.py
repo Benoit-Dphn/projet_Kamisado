@@ -2,6 +2,7 @@ import socket
 import json
 import threading
 import struct
+from utile import send_moves
 
 
 SERVER_IP = "172.17.10.125"
@@ -55,9 +56,10 @@ def handle_server_requests():
                 elif request.get("request") == "play":
                     state = request.get("state")
                     print(f"[!] Match en cours. État : {state}")
+                    le_meilleur_move = send_moves()
                     response = {
                         "response": "move",
-                        "move": 0,
+                        "move": le_meilleur_move,
                         "message": "Je vais gagner !",
                     }
                     send_json(conn, response)
