@@ -3,9 +3,10 @@ import json
 import threading
 import struct
 from utile import send_moves
+import AI
 
 
-SERVER_IP = "172.17.10.125"
+SERVER_IP = "192.168.1.134"
 SERVER_PORT = 3000
 MY_PORT = 5050
 MY_NAME = "ilyes et benoit contre le reste du monde "
@@ -14,7 +15,7 @@ FORMAT = "utf-8"
 
 
 def send_json(sock, data):
-
+    data = AI.negamaxWithPruningIterativeDeepening().best_move
     message = json.dumps(data).encode(FORMAT)
 
     length = struct.pack("I", len(message))

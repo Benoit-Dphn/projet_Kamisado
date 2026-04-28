@@ -6,10 +6,6 @@ def copy_board(state):
     return copied_board
 
 
-def send_moves(state, move):
-    pass
-
-
 def gameOver(state):
     board = state["board"]
 
@@ -99,3 +95,7 @@ def apply(state, move):
     new_state["board"] = board
     new_state["current"] = 1 - player
     return new_state
+
+def send_moves(state, move):
+    data = apply(state, move)
+    
