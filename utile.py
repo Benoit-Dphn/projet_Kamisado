@@ -7,7 +7,7 @@ def copy_board(state):
 
 
 def gameOver(state):
-    board = state["board"]
+    board = copy_board(state)
 
     for i in range(8):
         top_piece = board[0][i][1]
@@ -28,7 +28,7 @@ def get_pos(board, player, color):
         for c in range(8):
             if board[row][c][1] is not None:
                 if (board[row][c][1][0] == color) and (board[row][c][1][1]) == indx:
-                    return row, c
+                    return [row, c]
 
     return None
 
@@ -38,6 +38,9 @@ def get_legal_moves(board, player, starting_l, starting_c, color):
 
     direction = 1 if player == 0 else -1
     current_camp = "light" if player == 0 else "dark"
+
+    starting_l = get_pos(board, player, color)[0]
+    starting_c = get_pos(board, player, color)[1]
 
     # False => on continue d'explorer la direction, True => direction bloquee.
     blocked = {
