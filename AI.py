@@ -1,4 +1,4 @@
-from utile import gameOver, get_legal_moves, apply
+from utile import gameOver, get_legal_moves, apply, get_pos
 from evaluation import evaluation_kamisado
 from collections import defaultdict
 import time
@@ -26,7 +26,15 @@ def negamaxWithPruningIterativeDeepening(state, player, timeout=2.6):
             return -evaluation_kamisado(state, player), None, over
 
         theValue, theMove, theOver = float("-inf"), None, True
-        possibilities = [(move, apply(state, move)) for move in get_legal_moves(state)]
+        board = state["board"]
+        player = state["current"]
+        color = state["color"]
+        pos = get_pos(board, player, color)
+        starting_l, starting_c = pos[0], pos[1]
+        possibilities = [
+            (move, apply(state, move))
+            for move in get_legal_moves(board, player, starting_l, starting_c, color)
+        ]
 
         possibilities.sort(key=lambda poss: cache[tuple(poss[1])])
 
@@ -44,7 +52,7 @@ def negamaxWithPruningIterativeDeepening(state, player, timeout=2.6):
             if alpha >= beta:
                 break
 
-        cache[tuple(state)] = theValue
+        cache[tuple(tuple(tuple(row) for row in state["board"]))] = theValue
         return theValue, theMove, theOver
 
     depth = 1

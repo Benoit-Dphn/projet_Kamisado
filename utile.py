@@ -7,7 +7,7 @@ def copy_board(state):
 
 
 def gameOver(state):
-    board = state["board"]
+    board = copy_board(state)
 
     for i in range(8):
         top_piece = board[0][i][1]
@@ -28,7 +28,7 @@ def get_pos(board, player, color):
         for c in range(8):
             if board[row][c][1] is not None:
                 if (board[row][c][1][0] == color) and (board[row][c][1][1]) == indx:
-                    return row, c
+                    return [row, c]
 
     return None
 
@@ -86,7 +86,7 @@ def get_legal_moves(board, player, starting_l, starting_c, color):
 
 
 def apply(state, move):
-    start_l, start_c, end_l, end_c, player, color = move
+    start_l, start_c, end_l, end_c, player = move
     board = copy_board(state)
     pion = board[start_l][start_c][1]
     board[start_l][start_c][1] = None
@@ -94,6 +94,7 @@ def apply(state, move):
     new_state = copy.deepcopy(state)
     new_state["board"] = board
     new_state["current"] = 1 - player
+    new_state["color"] = "dark" if state["color"] == "light" else "light"
     return new_state
 
 
