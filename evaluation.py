@@ -1,4 +1,4 @@
-from utile import get_moves
+from utile import get_legal_moves, gameOver
 
 
 def evaluation_kamisado(etat, mon_index):
@@ -20,20 +20,22 @@ def evaluation_kamisado(etat, mon_index):
                 continue
 
             p_color, p_camp = piece
+            player = 0 if p_camp == "light" else 1
+
             dist_parcourue = r if p_camp == "light" else 7 - r
             valeur_piece = dist_parcourue * W_PROGRESSION
 
             if (p_camp == "light" and r == 7) or (p_camp == "dark" and r == 0):
                 valeur_piece += W_WIN_ACHIEVED
             else:
-                moves = get_moves(board, r, c, p_camp)
+                moves = get_legal_moves(board, player, r, c, p_color)
                 nb_moves = len(moves)
 
                 if nb_moves == 0:
                     valeur_piece -= W_BLOCK
                 else:
                     valeur_piece += nb_moves * W_MOBILITY
-                    for move_r, _ in moves:
+                    for move_r, move_c, _ in moves:
                         if (p_camp == "light" and move_r == 7) or (
                             p_camp == "dark" and move_r == 0
                         ):
@@ -49,7 +51,8 @@ def evaluation_kamisado(etat, mon_index):
             for c in range(8):
                 p = board[r][c][1]
                 if p and p[1] == mon_camp and p[0] == etat["color"]:
-                    if len(get_moves(board, r, c, mon_camp)) > 0:
+                    player = 0 if mon_camp == "light" else 1
+                    if len(get_legal_moves(board, player, r, c, mon_camp)) > 0:
                         ma_piece_coincee = False
                     found = True
                     break
