@@ -2,7 +2,6 @@ import socket
 import json
 import threading
 import struct
-from utile import send_moves
 import AI
 
 
@@ -15,9 +14,7 @@ FORMAT = "utf-8"
 
 
 def send_json(sock, data):
-    _, data = AI.negamaxWithPruningIterativeDeepening()
     message = json.dumps(data).encode(FORMAT)
-
     length = struct.pack("I", len(message))
     sock.sendall(length + message)
 
@@ -57,10 +54,13 @@ def handle_server_requests():
                 elif request.get("request") == "play":
                     state = request.get("state")
                     print(f"[!] Match en cours. État : {state}")
-                    le_meilleur_move = send_moves()
+                    player = state["current"]
+                    _, best_move = AI.negamaxWithPruningIterativeDeepening(
+                        state, player
+                    )
                     response = {
                         "response": "move",
-                        "move": le_meilleur_move,
+                        "move": best_move,
                         "message": "Je vais gagner !",
                     }
                     send_json(conn, response)
