@@ -94,10 +94,5 @@ def apply(state, move):
     new_state = copy.deepcopy(state)
     new_state["board"] = board
     new_state["current"] = 1 - player
-    new_state["color"] = "dark" if state["color"] == "light" else "light"
+    new_state["color"] = new_state["board"][end_l][end_c][0]
     return new_state
-
-
-def send_moves(state, move):
-    data = apply(state, move)
-    return data
