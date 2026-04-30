@@ -96,6 +96,7 @@ def apply(state, move):
     new_state["current"] = 1 - player
     return new_state
 
+
 def send_moves(state, move):
     data = apply(state, move)
-    
+    return data

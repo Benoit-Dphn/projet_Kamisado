@@ -1,4 +1,4 @@
-from utile import get_legal_moves, gameOver
+from utile import get_legal_moves
 
 
 def evaluation_kamisado(etat, mon_index):
