@@ -15,7 +15,7 @@ FORMAT = "utf-8"
 
 
 def send_json(sock, data):
-    data = AI.negamaxWithPruningIterativeDeepening().best_move
+    _, data = AI.negamaxWithPruningIterativeDeepening()
     message = json.dumps(data).encode(FORMAT)
 
     length = struct.pack("I", len(message))

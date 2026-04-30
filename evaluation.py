@@ -1,9 +1,9 @@
-from utile import get_legal_moves, gameOver
+from utile import get_legal_moves
 
 
 def evaluation_kamisado(etat, mon_index):
     board = etat["board"]
-    mon_camp = "light" if mon_index == 0 else "dark"
+    mon_camp = "light" if mon_index == 1 else "dark"
 
     score = 0
 
@@ -52,7 +52,7 @@ def evaluation_kamisado(etat, mon_index):
                 p = board[r][c][1]
                 if p and p[1] == mon_camp and p[0] == etat["color"]:
                     player = 0 if mon_camp == "light" else 1
-                    if len(get_legal_moves(board, player, r, c, mon_camp)) > 0:
+                    if len(get_legal_moves(board, player, r, c, p_color)) > 0:
                         ma_piece_coincee = False
                     found = True
                     break

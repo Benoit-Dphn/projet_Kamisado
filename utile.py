@@ -39,9 +39,6 @@ def get_legal_moves(board, player, starting_l, starting_c, color):
     direction = 1 if player == 0 else -1
     current_camp = "light" if player == 0 else "dark"
 
-    starting_l = get_pos(board, player, color)[0]
-    starting_c = get_pos(board, player, color)[1]
-
     # False => on continue d'explorer la direction, True => direction bloquee.
     blocked = {
         "diag_left": False,
@@ -89,7 +86,7 @@ def get_legal_moves(board, player, starting_l, starting_c, color):
 
 
 def apply(state, move):
-    start_l, start_c, end_l, end_c, player, color = move
+    start_l, start_c, end_l, end_c, player = move
     board = copy_board(state)
     pion = board[start_l][start_c][1]
     board[start_l][start_c][1] = None
@@ -97,7 +94,9 @@ def apply(state, move):
     new_state = copy.deepcopy(state)
     new_state["board"] = board
     new_state["current"] = 1 - player
+    new_state["color"] = "dark" if state["color"] == "light" else "light"
     return new_state
+
 
 def send_moves(state, move):
     data = apply(state, move)
