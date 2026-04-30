@@ -1,10 +1,5 @@
 from utile import gameOver, get_legal_moves, apply
 from evaluation import evaluation_kamisado
-from collections import defaultdict
-import time
-
-class TimeOutError(Exception):
-	pass
 
 
 def negamaxWithPruningIterativeDeepening(state, player, timeout=2.8):
