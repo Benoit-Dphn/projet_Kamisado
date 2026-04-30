@@ -101,4 +101,4 @@ def apply(state, move):
 
 def send_moves(state, move):
     data = apply(state, move)
-    
+    return data
