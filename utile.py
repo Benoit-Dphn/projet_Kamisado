@@ -36,8 +36,8 @@ def get_pos(board, player, color):
 def get_legal_moves(board, player, starting_l, starting_c, color):
     legal_moves = []
 
-    direction = 1 if player == 0 else -1
-    current_camp = "light" if player == 0 else "dark"
+    direction = 1 if player == 1 else -1
+    current_camp = "light" if player == 1 else "dark"
 
     # False => on continue d'explorer la direction, True => direction bloquee.
     blocked = {
@@ -71,22 +71,23 @@ def get_legal_moves(board, player, starting_l, starting_c, color):
 
             if piece is None:
                 legal_moves.append((next_l, next_c, square[0]))
-                continue
-
-            # Collision: si pion adverse, on ajoute la case puis on bloque la direction.
-            if piece[1] != current_camp:
-                legal_moves.append((next_l, next_c, square[0]))
-
-            blocked[name] = True
+            else:
+                blocked[name] = True
 
         if blocked["diag_left"] and blocked["vertical"] and blocked["diag_right"]:
             break
 
+        if len(legal_moves) == 0:
+            legal_moves.append(
+                (starting_l, starting_c, board[starting_l][starting_c][0])
+            )
+
     return legal_moves
 
 
-def apply(state, move):
-    start_l, start_c, end_l, end_c, player = move
+def apply(state, starting_l, starting_c, player, move):
+    start_l, start_c = starting_l, starting_c
+    end_l, end_c, color = move
     board = copy_board(state)
     pion = board[start_l][start_c][1]
     board[start_l][start_c][1] = None
@@ -94,5 +95,5 @@ def apply(state, move):
     new_state = copy.deepcopy(state)
     new_state["board"] = board
     new_state["current"] = 1 - player
-    new_state["color"] = new_state["board"][end_l][end_c][0]
+    new_state["color"] = color
     return new_state

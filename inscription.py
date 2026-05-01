@@ -5,11 +5,11 @@ import struct
 import AI
 
 
-SERVER_IP = "192.168.1.134"
+SERVER_IP = "130.104.38.253"
 SERVER_PORT = 3000
 MY_PORT = 5050
-MY_NAME = "ilyes et benoit contre le reste du monde "
-MATRICULES = ["22001"]
+MY_NAME = "bot1"
+MATRICULES = ["22011"]
 FORMAT = "utf-8"
 
 
@@ -61,7 +61,7 @@ def handle_server_requests():
                     response = {
                         "response": "move",
                         "move": best_move,
-                        "message": "Je vais gagner !",
+                        "message": "y'a plus de tomate  !",
                     }
                     send_json(conn, response)
 

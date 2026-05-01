@@ -60,6 +60,9 @@ def evaluation_kamisado(etat, mon_index):
                 break
 
         if ma_piece_coincee:
-            score -= 500
+            if p_camp == mon_camp:
+                score -= 500
+            else:
+                score += 500
 
     return score
