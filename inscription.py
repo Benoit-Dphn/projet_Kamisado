@@ -2,7 +2,7 @@ import socket
 import json
 import threading
 import struct
-from utile import send_moves
+from utile import send_moves, get_pos, copy_board
 import AI
 
 
@@ -15,7 +15,9 @@ FORMAT = "utf-8"
 
 
 def send_json(sock, data):
-    _, data = AI.negamaxWithPruningIterativeDeepening()
+    _, data = [ get_pos(copy_board()),
+                AI.negamaxWithPruningIterativeDeepening(receive_json(sock), receive_json(sock)[2])]
+               
     message = json.dumps(data).encode(FORMAT)
 
     length = struct.pack("I", len(message))
