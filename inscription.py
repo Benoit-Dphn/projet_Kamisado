@@ -2,24 +2,19 @@ import socket
 import json
 import threading
 import struct
-from utile import send_moves, get_pos, copy_board
 import AI
 
 
-SERVER_IP = "192.168.1.134"
+SERVER_IP = "130.104.38.253"
 SERVER_PORT = 3000
 MY_PORT = 5050
-MY_NAME = "IA test "
-MATRICULES = ["22001"]
+MY_NAME = "bot1"
+MATRICULES = ["22011"]
 FORMAT = "utf-8"
 
 
 def send_json(sock, data):
-    _, data = [ get_pos(copy_board()),
-                AI.negamaxWithPruningIterativeDeepening(receive_json(sock), receive_json(sock)[2])]
-               
     message = json.dumps(data).encode(FORMAT)
-
     length = struct.pack("I", len(message))
     sock.sendall(length + message)
 
@@ -59,11 +54,14 @@ def handle_server_requests():
                 elif request.get("request") == "play":
                     state = request.get("state")
                     print(f"[!] Match en cours. État : {state}")
-                    le_meilleur_move = send_moves()
+                    player = state["current"]
+                    _, best_move = AI.negamaxWithPruningIterativeDeepening(
+                        state, player
+                    )
                     response = {
                         "response": "move",
-                        "move": le_meilleur_move,
-                        "message": "Je vais gagner !",
+                        "move": best_move,
+                        "message": "y'a plus de tomate  !",
                     }
                     send_json(conn, response)
 

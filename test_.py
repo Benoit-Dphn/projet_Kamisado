@@ -375,7 +375,21 @@ def test_get_pos():
 
 
 def test_get_legal_moves():
-    pass
+    assert utile.get_legal_moves(state2["board"], 0, 7, 4, "red") == [
+        (6, 3, "blue"),
+        (6, 4, "green"),
+        (6, 5, "pink"),
+        (5, 2, "brown"),
+        (5, 4, "red"),
+        (5, 6, "pink"),
+        (4, 1, "red"),
+        (4, 4, "orange"),
+        (4, 7, "pink"),
+        (3, 0, "pink"),
+        (3, 4, "brown"),
+        (2, 4, "purple"),
+        (1, 4, "blue"),
+    ]
 
 
 def test_aplly():
