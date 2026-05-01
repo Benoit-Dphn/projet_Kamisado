@@ -9,7 +9,7 @@ import AI
 SERVER_IP = "192.168.1.134"
 SERVER_PORT = 3000
 MY_PORT = 5050
-MY_NAME = "ilyes et benoit contre le reste du monde "
+MY_NAME = "IA test "
 MATRICULES = ["22001"]
 FORMAT = "utf-8"
 
