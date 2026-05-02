@@ -3,6 +3,7 @@ import json
 import threading
 import struct
 import AI
+import random
 
 
 SERVER_IP = "130.104.38.253"
@@ -11,6 +12,19 @@ MY_PORT = 5050
 MY_NAME = "bot1"
 MATRICULES = ["22011"]
 FORMAT = "utf-8"
+messages = [
+    "eh rentre a la maison",
+    "tu va revivre l'exam de thermo",
+    "ct mieux gorilliat",
+    "ah la rue",
+    "recherche de kot pas loin de l'ecam",
+    "a tjrs celib benoit",
+    "floriant adore les chats",
+    "faut laisser les militair gagner, ils savent tirer avec des kalash ",
+    "j'ai plus d'inspi",
+    "ct bien sans IA",
+    "bon bah je rajouterais des trucs quand j'aurais de l'inspi",
+]
 
 
 def send_json(sock, data):
@@ -61,7 +75,7 @@ def handle_server_requests():
                     response = {
                         "response": "move",
                         "move": best_move,
-                        "message": "y'a plus de tomate  !",
+                        "message": messages[random.randint(0, len(messages) - 1)],
                     }
                     send_json(conn, response)
 
