@@ -6,10 +6,10 @@ import AI
 import random
 
 
-SERVER_IP = "130.104.38.253"
+SERVER_IP = "10.28.157.158"
 SERVER_PORT = 3000
 MY_PORT = 5050
-MY_NAME = "bot1"
+MY_NAME = "edward"
 MATRICULES = ["22011"]
 FORMAT = "utf-8"
 messages = [

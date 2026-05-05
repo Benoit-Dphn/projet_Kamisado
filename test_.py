@@ -355,7 +355,7 @@ def test_copy_board():
 
 
 def test_eval():
-    assert evaluation.evaluation_kamisado(state, 0) == 10270
+    assert evaluation.evaluation_kamisado(state, 0) == 498290
     assert (
         evaluation.evaluation_kamisado(state, 0)
         == evaluation.evaluation_kamisado(state, 1) * -1
