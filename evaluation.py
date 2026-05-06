@@ -3,6 +3,7 @@ from utile import get_legal_moves
 
 def evaluation_kamisado(etat, mon_index):
     board = etat["board"]
+    mon_index = etat["current"]
     mon_camp = "light" if mon_index == 1 else "dark"
     score = 0
 
