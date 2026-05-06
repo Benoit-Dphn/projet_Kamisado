@@ -22,7 +22,7 @@ def state_to_key(state):
     return (board_to_key(state["board"]), state["current"], state["color"])
 
 
-def negamaxWithPruningIterativeDeepening(state, player, timeout=2.5):
+def negamaxWithPruningIterativeDeepening(state, player, timeout=2.9):
 
     cache = {}
     start_time = time.time()

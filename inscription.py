@@ -6,7 +6,7 @@ import AI
 import random
 
 
-SERVER_IP = "10.28.157.158"
+SERVER_IP = "172.20.10.4"
 SERVER_PORT = 3000
 MY_PORT = 5050
 MY_NAME = "edward"
