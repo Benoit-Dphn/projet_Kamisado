@@ -17,7 +17,7 @@ def evaluation_kamisado(etat, mon_index):
         600,
         10000,
     ]
-    W_MOBILITY = 10
+    W_MOBILITY = 15
     W_BLOCK_PENALTY = 500
     W_WIN_THREAT = 1500
     W_WIN_ACHIEVED = 500000

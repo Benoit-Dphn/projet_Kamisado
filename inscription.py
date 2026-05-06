@@ -4,9 +4,9 @@ import threading
 import struct
 import AI
 import random
+import utile
 
-
-SERVER_IP = "172.20.10.4"
+SERVER_IP = "172.20.10.2"
 SERVER_PORT = 3000
 MY_PORT = 5050
 MY_NAME = "edward"
@@ -68,10 +68,15 @@ def handle_server_requests():
                 elif request.get("request") == "play":
                     state = request.get("state")
                     print(f"[!] Match en cours. État : {state}")
+                    print(f"les erreur {request.get('errors')}")
                     player = state["current"]
                     _, best_move = AI.negamaxWithPruningIterativeDeepening(
                         state, player
                     )
+                    if best_move == None:
+                        pos = utile.get_pos(state["board"], player, state["color"])
+                        best_move = [pos, pos]
+                    print(f"les besst move {best_move}")
                     response = {
                         "response": "move",
                         "move": best_move,
@@ -81,7 +86,6 @@ def handle_server_requests():
 
 
 threading.Thread(target=handle_server_requests, daemon=True).start()
-
 try:
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect((SERVER_IP, SERVER_PORT))
@@ -102,7 +106,5 @@ try:
     client.close()
 except Exception as e:
     print(f"[X] Erreur de connexion : {e}")
-
-
 while True:
     pass

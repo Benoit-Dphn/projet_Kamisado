@@ -2,7 +2,6 @@ import utile
 import copy
 import evaluation
 import AI
-import inscription
 import pytest
 
 state2 = {
@@ -358,19 +357,22 @@ def test_copy_board():
 
 
 def test_eval1():
-    assert evaluation.evaluation_kamisado(state, 0) == -498290
+    assert evaluation.evaluation_kamisado(state, 0) == -499255
+
 
 def test_eval2():
-        assert (
-        evaluation.evaluation_kamisado(state, 0)
-        == evaluation.evaluation_kamisado(state, 1)
+    assert evaluation.evaluation_kamisado(state, 0) == evaluation.evaluation_kamisado(
+        state, 1
     )
+
 
 def test_gameOver():
     assert utile.gameOver(state)
 
+
 def test_get_pos():
     assert utile.get_pos(board, player, color) == [0, 3]
+
 
 def test_get_legal_moves():
     assert utile.get_legal_moves(state2["board"], 0, 7, 4, "red") == [
@@ -389,24 +391,306 @@ def test_get_legal_moves():
         (1, 4, "blue"),
     ]
 
+
 def test_aplly():
     starting_l, starting_c = 0, 0
     player = 1
     move = 1, 0, "red"
     assert utile.apply(state2, starting_l, starting_c, player, move) == state3
 
+
 def test_TimeOutError():
     with pytest.raises(TimeoutError, match="Exception"):
         raise TimeoutError(Exception)
 
+
 def test_board_to_key():
-    assert AI.board_to_key(state3["board"]) == ((('orange', None), ('blue', ('orange', 'light')), ('purple', ('green', 'light')), ('pink', ('red', 'light')), ('yellow', ('purple', 'light')), ('red', ('blue', 'light')), ('green', ('brown', 'light')), ('brown', ('yellow', 'light'))), (('red', ('pink', 'light')), ('orange', None), ('pink', None), ('green', None), ('blue', None), ('yellow', None), ('brown', None), ('purple', None)), (('green', None), ('pink', None), ('orange', None), ('red', None), ('purple', None), ('brown', None), ('yellow', None), ('blue', None)), (('pink', None), ('purple', None), ('blue', None), ('orange', None), ('brown', None), ('green', None), ('red', None), ('yellow', None)), (('yellow', None), ('red', None), ('green', None), ('brown', None), ('orange', None), ('blue', None), ('purple', None), ('pink', None)), (('blue', None), ('yellow', None), ('brown', None), ('purple', None), ('red', None), ('orange', None), ('pink', None), ('green', None)), (('purple', None), ('brown', None), ('yellow', None), ('blue', None), ('green', None), ('pink', None), ('orange', None), ('red', None)), (('brown', ('yellow', 'dark')), ('green', ('green', 'dark')), ('red', ('orange', 'dark')), ('yellow', ('purple', 'dark')), ('pink', ('red', 'dark')), ('purple', ('brown', 'dark')), ('blue', ('blue', 'dark')), ('orange', ('pink', 'dark'))))
+    assert AI.board_to_key(state3["board"]) == (
+        (
+            ("orange", None),
+            ("blue", ("orange", "light")),
+            ("purple", ("green", "light")),
+            ("pink", ("red", "light")),
+            ("yellow", ("purple", "light")),
+            ("red", ("blue", "light")),
+            ("green", ("brown", "light")),
+            ("brown", ("yellow", "light")),
+        ),
+        (
+            ("red", ("pink", "light")),
+            ("orange", None),
+            ("pink", None),
+            ("green", None),
+            ("blue", None),
+            ("yellow", None),
+            ("brown", None),
+            ("purple", None),
+        ),
+        (
+            ("green", None),
+            ("pink", None),
+            ("orange", None),
+            ("red", None),
+            ("purple", None),
+            ("brown", None),
+            ("yellow", None),
+            ("blue", None),
+        ),
+        (
+            ("pink", None),
+            ("purple", None),
+            ("blue", None),
+            ("orange", None),
+            ("brown", None),
+            ("green", None),
+            ("red", None),
+            ("yellow", None),
+        ),
+        (
+            ("yellow", None),
+            ("red", None),
+            ("green", None),
+            ("brown", None),
+            ("orange", None),
+            ("blue", None),
+            ("purple", None),
+            ("pink", None),
+        ),
+        (
+            ("blue", None),
+            ("yellow", None),
+            ("brown", None),
+            ("purple", None),
+            ("red", None),
+            ("orange", None),
+            ("pink", None),
+            ("green", None),
+        ),
+        (
+            ("purple", None),
+            ("brown", None),
+            ("yellow", None),
+            ("blue", None),
+            ("green", None),
+            ("pink", None),
+            ("orange", None),
+            ("red", None),
+        ),
+        (
+            ("brown", ("yellow", "dark")),
+            ("green", ("green", "dark")),
+            ("red", ("orange", "dark")),
+            ("yellow", ("purple", "dark")),
+            ("pink", ("red", "dark")),
+            ("purple", ("brown", "dark")),
+            ("blue", ("blue", "dark")),
+            ("orange", ("pink", "dark")),
+        ),
+    )
+
 
 def test_state_to_key():
-    assert AI.state_to_key(state3) == (((('orange', None), ('blue', ('orange', 'light')), ('purple', ('green', 'light')), ('pink', ('red', 'light')), ('yellow', ('purple', 'light')), ('red', ('blue', 'light')), ('green', ('brown', 'light')), ('brown', ('yellow', 'light'))), (('red', ('pink', 'light')), ('orange', None), ('pink', None), ('green', None), ('blue', None), ('yellow', None), ('brown', None), ('purple', None)), (('green', None), ('pink', None), ('orange', None), ('red', None), ('purple', None), ('brown', None), ('yellow', None), ('blue', None)), (('pink', None), ('purple', None), ('blue', None), ('orange', None), ('brown', None), ('green', None), ('red', None), ('yellow', None)), (('yellow', None), ('red', None), ('green', None), ('brown', None), ('orange', None), ('blue', None), ('purple', None), ('pink', None)), (('blue', None), ('yellow', None), ('brown', None), ('purple', None), ('red', None), ('orange', None), ('pink', None), ('green', None)), (('purple', None), ('brown', None), ('yellow', None), ('blue', None), ('green', None), ('pink', None), ('orange', None), ('red', None)), (('brown', ('yellow', 'dark')), ('green', ('green', 'dark')), ('red', ('orange', 'dark')), ('yellow', ('purple', 'dark')), ('pink', ('red', 'dark')), ('purple', ('brown', 'dark')), ('blue', ('blue', 'dark')), ('orange', ('pink', 'dark')))), 0, 'red')
+    assert AI.state_to_key(state3) == (
+        (
+            (
+                ("orange", None),
+                ("blue", ("orange", "light")),
+                ("purple", ("green", "light")),
+                ("pink", ("red", "light")),
+                ("yellow", ("purple", "light")),
+                ("red", ("blue", "light")),
+                ("green", ("brown", "light")),
+                ("brown", ("yellow", "light")),
+            ),
+            (
+                ("red", ("pink", "light")),
+                ("orange", None),
+                ("pink", None),
+                ("green", None),
+                ("blue", None),
+                ("yellow", None),
+                ("brown", None),
+                ("purple", None),
+            ),
+            (
+                ("green", None),
+                ("pink", None),
+                ("orange", None),
+                ("red", None),
+                ("purple", None),
+                ("brown", None),
+                ("yellow", None),
+                ("blue", None),
+            ),
+            (
+                ("pink", None),
+                ("purple", None),
+                ("blue", None),
+                ("orange", None),
+                ("brown", None),
+                ("green", None),
+                ("red", None),
+                ("yellow", None),
+            ),
+            (
+                ("yellow", None),
+                ("red", None),
+                ("green", None),
+                ("brown", None),
+                ("orange", None),
+                ("blue", None),
+                ("purple", None),
+                ("pink", None),
+            ),
+            (
+                ("blue", None),
+                ("yellow", None),
+                ("brown", None),
+                ("purple", None),
+                ("red", None),
+                ("orange", None),
+                ("pink", None),
+                ("green", None),
+            ),
+            (
+                ("purple", None),
+                ("brown", None),
+                ("yellow", None),
+                ("blue", None),
+                ("green", None),
+                ("pink", None),
+                ("orange", None),
+                ("red", None),
+            ),
+            (
+                ("brown", ("yellow", "dark")),
+                ("green", ("green", "dark")),
+                ("red", ("orange", "dark")),
+                ("yellow", ("purple", "dark")),
+                ("pink", ("red", "dark")),
+                ("purple", ("brown", "dark")),
+                ("blue", ("blue", "dark")),
+                ("orange", ("pink", "dark")),
+            ),
+        ),
+        0,
+        "red",
+    )
+
 
 def test_AI():
-    assert AI.negamaxWithPruningIterativeDeepening(state3, state3["current"]) == (2600, [[7, 4], [1, 4]])
+    assert AI.negamaxWithPruningIterativeDeepening(state3, state3["current"]) == (
+        790,
+        [[7, 4], [1, 4]],
+    )
+
 
 def test_send_json():
     pass
+
+
+def test_simulation_serveur_bloquage_total():
+    board = [
+        [
+            ["orange", ["pink", "light"]],
+            ["blue", None],
+            ["purple", None],
+            ["pink", None],
+            ["yellow", ["purple", "light"]],
+            ["red", ["blue", "light"]],
+            ["green", ["brown", "light"]],
+            ["brown", ["yellow", "light"]],
+        ],
+        [
+            ["red", None],
+            ["orange", None],
+            ["pink", None],
+            ["green", None],
+            ["blue", None],
+            ["yellow", None],
+            ["brown", None],
+            ["purple", None],
+        ],
+        [
+            ["green", None],
+            ["pink", None],
+            ["orange", None],
+            ["red", None],
+            ["purple", None],
+            ["brown", None],
+            ["yellow", None],
+            ["blue", None],
+        ],
+        [
+            ["pink", None],
+            ["purple", None],
+            ["blue", None],
+            ["orange", None],
+            ["brown", None],
+            ["green", None],
+            ["red", None],
+            ["yellow", None],
+        ],
+        [
+            ["yellow", None],
+            ["red", None],
+            ["green", None],
+            ["brown", None],
+            ["orange", None],
+            ["blue", None],
+            ["purple", None],
+            ["pink", None],
+        ],
+        [
+            ["blue", None],
+            ["yellow", None],
+            ["brown", None],
+            ["purple", None],
+            ["red", None],
+            ["orange", None],
+            ["pink", None],
+            ["green", None],
+        ],
+        [
+            ["purple", None],
+            ["brown", ["green", "light"]],
+            ["yellow", ["orange", "light"]],
+            ["blue", ["red", "light"]],
+            ["green", None],
+            ["pink", None],
+            ["orange", None],
+            ["red", None],
+        ],
+        [
+            ["brown", ["yellow", "dark"]],
+            ["green", ["green", "dark"]],
+            ["red", ["orange", "dark"]],
+            ["yellow", ["purple", "dark"]],
+            ["pink", ["red", "dark"]],
+            ["purple", ["brown", "dark"]],
+            ["blue", ["blue", "dark"]],
+            ["orange", ["pink", "dark"]],
+        ],
+    ]
+
+    state_prison = {
+        "players": ["Adversaire", "Mon IA"],
+        "current": 1,
+        "color": "orange",
+        "board": board,
+    }
+
+    player = state_prison["current"]
+    color = state_prison["color"]
+
+    _, best_move = AI.negamaxWithPruningIterativeDeepening(state_prison, player)
+
+    if best_move is None:
+        pos = utile.get_pos(state_prison["board"], player, color)
+        best_move = [pos, pos]
+    print(f"Position trouvée pour orange : {pos}")
+    print(f"Mouvement final envoyé au serveur : {best_move}")
+    print(best_move)
+    print(pos)
+
+    assert best_move == [[6, 2], [6, 2]], "bon"
