@@ -35,7 +35,6 @@ def get_pos(board, player, color):
 
 def get_legal_moves(board, player, starting_l, starting_c, color):
     legal_moves = []
-
     direction = 1 if player == 1 else -1
     current_camp = "light" if player == 1 else "dark"
 
